@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1"
+         metadata-complete="true">
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/daoContext.xml,/WEB-INF/appContext.xml</param-value>
+    </context-param>
+    <listener>
+        <!--    在web应用已启动过的时候创建springmvc容器-->
+        <!--    默认访问applicationContext.xml-->
+        <!--    如果希望使用自己的配置文件使用applicationContext.xml配置-->
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <servlet>
+        <!--    也会创建一个springmvc容器    当其使用spring  mvc 容器的也会创建一个配置文件
+                配置文件名称以servlet-name参数+ -servlet.xml为准
+        -->
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--    希望在web应用已启动的时候就创建webservlet-->
+        <init-param>
+            <param-name>contextConfigLocaion</param-name>
+            <param-value>/WEB-INF/springmvc.xml</param-value>
+        </init-param>
+
+        <load-on-startup>1</load-on-startup>
+
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+</web-app>
